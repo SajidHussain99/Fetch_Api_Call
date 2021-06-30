@@ -1,25 +1,45 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState, useEffect } from 'react';
 
-function App() {
+const useFetch = url => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(async () => {
+    const response = await fetch(url);
+    const data = await response.json();
+    const item = data;
+
+    setData(item);
+    setLoading(false);
+
+  }, []);
+  return { data, loading };
+};
+export default () => {
+  const { data, loading } = useFetch("https://jsonplaceholder.typicode.com/posts");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+
+      {loading ? <div> <h3>loading...</h3></div> :
+        <div>
+          <h3>The Number of Random Posts are:</h3>
+          <ul>
+            {data.map(post => (
+              <li key={post.id}>
+                <h4>{post.title}</h4>
+                <p>{post.body}</p>
+
+              </li>
+
+            ))}
+          </ul>
+
+
+        </div>}
     </div>
   );
 }
 
-export default App;
+
