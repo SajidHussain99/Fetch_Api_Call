@@ -23,8 +23,8 @@ export default () => {
     <div>
 
       {loading ? <div> <h3>loading...</h3></div> :
-        <div>
-          <h3>The Number of Random Posts are:</h3>
+        <div className="Inner-body">
+          <h3>Some Random Posts Using Fetch Api with useEffect and useState Hooks of react:</h3>
           <ul>
             {data.map(post => (
               <li key={post.id}>
